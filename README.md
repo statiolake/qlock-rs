@@ -26,7 +26,7 @@ compiles qlock_base.rs and quine_base.rs into qlock.rs and quine.rs, respectivel
 cargo xtask diff
 ```
 
-will compare quine_base.rs.
+will compare quine.rs and its output to ensure the "compiled" code is a quine.
 
 # Under the hood
 
