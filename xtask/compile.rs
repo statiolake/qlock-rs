@@ -36,36 +36,12 @@ fn minify(s: &str) -> String {
     result
 }
 
-fn split_string_literal(s: &str) -> String {
-    let s = s.trim_start_matches('"').trim_end_matches('"');
-    let mut literals = vec![];
-    let mut literal = String::new();
-    let mut after_backslash = false;
-    for c in s.chars() {
-        if !after_backslash && literal.len() >= 10 {
-            literals.push(literal);
-            literal = String::new();
-        }
-
-        literal.push(c);
-
-        after_backslash = c == '\\';
-    }
-
-    if !literal.is_empty() {
-        literals.push(literal);
-    }
-
-    format!("concat!(\"{}\")", literals.join("\", \""))
-}
-
 fn compile(base: &str, out: &str) -> io::Result<()> {
-    let source = read_to_string(base)?;
-    let minified_source = minify(&source);
-    let splitted_literal = split_string_literal(&format!("{minified_source:?}"));
-    let embedded = source.replace("\"~\"", &splitted_literal);
-    let final_source = minify(&embedded);
-    write(out, final_source)?;
+    let s = read_to_string(base)?;
+    let s = minify(&s);
+    let ss = format!("{s:?}");
+    let s = s.replace('~', &ss[1..ss.len() - 1]);
+    write(out, s)?;
     Ok(())
 }
 
