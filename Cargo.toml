@@ -1,0 +1,19 @@
+[package]
+name = "qlock-rs"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "xtask"
+path = "xtask/driver.rs"
+
+[[bin]]
+name = "qlock"
+path = "src/qlock.rs"
+
+[[bin]]
+name = "quine"
+path = "src/quine.rs"
+
+[dependencies]
+chrono = "0.4.38"
